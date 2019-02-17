@@ -13,6 +13,11 @@ public class Bullet : MonoBehaviour
         Enemy = E;
     }
 
+    public GameObject GetEnemy()
+    {
+        return Enemy;
+    }
+
     public void SetSpeed(int S)
     {
         Speed = S;
@@ -29,7 +34,8 @@ public class Bullet : MonoBehaviour
     {
         try
         {
-            Enemy = GameObject.FindGameObjectWithTag("Enemy");
+            GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            Enemy = FindClosestEnemy(Enemies);
             // Debug.Log("Enemy is: " + Enemy.name + ". At the position: "+ Enemy.transform.position + " And I am at this position: " + transform.position);
             if (Enemy == null || transform.position == Enemy.transform.position)
             {
@@ -38,7 +44,7 @@ public class Bullet : MonoBehaviour
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, Enemy.transform.position, Speed / 20);
+                transform.position = Vector3.MoveTowards(transform.position, Enemy.transform.position, Speed/10);
             }
         }
         catch(NullReferenceException e)
@@ -47,6 +53,23 @@ public class Bullet : MonoBehaviour
         }
       
     }
+    public GameObject FindClosestEnemy(GameObject[] Enemies)
+    {
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject dork in Enemies)
+        {
+            Vector3 diff = dork.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = dork;
+                distance = curDistance;
+            }
+        }
+        return closest;
+    }
 
-    
+
 }
