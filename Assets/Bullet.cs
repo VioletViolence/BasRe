@@ -36,10 +36,10 @@ public class Bullet : MonoBehaviour
         {
             GameObject[] Enemies = GameObject.FindGameObjectsWithTag("Enemy");
             Enemy = FindClosestEnemy(Enemies);
-            // Debug.Log("Enemy is: " + Enemy.name + ". At the position: "+ Enemy.transform.position + " And I am at this position: " + transform.position);
+            //Debug.Log("Enemy is: " + Enemy.name + ". At the position: "+ Enemy.transform.position + " And I am at this position: " + transform.position);
             if (Enemy == null || transform.position == Enemy.transform.position)
             {
-                Enemy.GetComponent<Target>().SendMessage("Hit", Damage);
+                Enemy.GetComponent<Attack_Manager>().SendMessage("Hit", Damage);
                 Destroy(gameObject);
             }
             else
@@ -55,6 +55,7 @@ public class Bullet : MonoBehaviour
     }
     public GameObject FindClosestEnemy(GameObject[] Enemies)
     {
+
         GameObject closest = null;
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;

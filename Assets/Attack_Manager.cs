@@ -5,18 +5,23 @@ using UnityEngine;
 public class Attack_Manager : MonoBehaviour
 {
     [SerializeField] GameObject Bullet;
-    [SerializeField] float AttackSpeed;
-    [SerializeField] GameObject AttakPoint;
-    [SerializeField] int AttackDamage;
-    private int BulletSpeed;
-    private int Health;
-    private int Armor;
-    private int MagicResist;
-    private bool isMagical;
+    [SerializeField] GameObject AttackPoint;
+    [SerializeField] GameObject DeathEffect;
+    private bool isDestroyed = false;
+    private float AttackSpeed = 10;
+    private int AttackDamage = 100;
+    private int BulletSpeed = 10;
+    [SerializeField] private int Health = 3000;
+    private int Armor = 20;
+    private int MagicResist = 20;
+    private int isMagical = 20;
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Attack", Time.deltaTime, AttackSpeed);
+        if (gameObject.tag != "Enemy")
+        {
+            InvokeRepeating("Attack", Time.deltaTime, 1/AttackSpeed);
+        }
     }
 
     // Update is called once per frame
@@ -27,10 +32,30 @@ public class Attack_Manager : MonoBehaviour
 
     private void Attack()
     {
-        GameObject newBullet = Instantiate(Bullet, AttakPoint.transform.position, Quaternion.identity );
+        GameObject newBullet = Instantiate(Bullet, AttackPoint.transform.position, Quaternion.identity );
         newBullet.GetComponent<Bullet>().Speed = AttackSpeed;
         newBullet.GetComponent<Bullet>().Damage = AttackDamage;
 
+    }
+    public void Hit(int dmg)
+    {
+        //  Debug.Log("I got hit for " + dmg + " damage and now have " + Health + (" health."));
+        Health = Health - dmg;
+        if (Health <= 0 && isDestroyed == false)
+        {
+            GameObject[] Bullets = GameObject.FindGameObjectsWithTag("Bullet");
+            foreach (GameObject item in Bullets)
+            {
+                GameObject itemTarget = item.GetComponent<Bullet>().GetEnemy();
+                if (itemTarget == gameObject)
+                {
+                    Destroy(item);
+                }
+            }
+            Instantiate(DeathEffect, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+            isDestroyed = true;
+            Destroy(gameObject);
+        }
     }
 
 
@@ -84,11 +109,11 @@ public class Attack_Manager : MonoBehaviour
         MagicResist = magRes
 ;
     }
-    public bool GetIsMagical()
+    public int GetIsMagical()
     {
         return isMagical;
     }
-    public void SetIsMagical(bool isM)
+    public void SetIsMagical(int isM)
     {
         isMagical = isM;
     }

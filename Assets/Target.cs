@@ -33,4 +33,8 @@ public class Target : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public int GetHealth()
+    {
+        return Health;
+    }
 }
