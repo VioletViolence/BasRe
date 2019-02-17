@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: a1_atlas_03_ChessBoard
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: CUBEMAP_RENDERING_OFF SHADOWS_RENDERING_ON
-  m_LightmapFlags: 5
+  m_ShaderKeywords: CUBEMAP_RENDERING_OFF SHADOWS_RENDERING_ON _EMISSION
+  m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -101,6 +101,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _AmbientColor: {r: 0.32941177, g: 0.30588236, b: 0.23137255, a: 0}
-    - _Color: {r: 0.51621974, g: 0.79719305, b: 0.9117647, a: 1}
+    - _Color: {r: 0.20425421, g: 0.73271227, b: 0.9622642, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadowsTint: {r: 0.7137255, g: 0.6039216, b: 0.32941177, a: 0}

@@ -5,14 +5,14 @@ using UnityEngine;
 public class Attack_Manager : MonoBehaviour
 {
     [SerializeField] GameObject Bullet;
-    private float AttackSpeed;
-    private int AttackDamage;
+    [SerializeField] float AttackSpeed;
+    [SerializeField] GameObject AttakPoint;
+    [SerializeField] int AttackDamage;
     private int BulletSpeed;
     private int Health;
     private int Armor;
     private int MagicResist;
     private bool isMagical;
-    private GameObject Enemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,17 +27,9 @@ public class Attack_Manager : MonoBehaviour
 
     private void Attack()
     {
-        if(gameObject.tag == "Player")
-        {
-            Enemy = GameObject.FindGameObjectWithTag("Enemy");
-        }
-        else
-        {
-            Enemy = GameObject.FindGameObjectWithTag("Player");
-        }
-        GameObject newBullet = Instantiate(Bullet, transform.position, Quaternion.identity);
-        newBullet.GetComponent<Bullet>().SetEnemy(Enemy);
-        newBullet.GetComponent<Bullet>().SetSpeed(BulletSpeed);
+        GameObject newBullet = Instantiate(Bullet, AttakPoint.transform.position, Quaternion.identity );
+        newBullet.GetComponent<Bullet>().Speed = AttackSpeed;
+        newBullet.GetComponent<Bullet>().Damage = AttackDamage;
 
     }
 
